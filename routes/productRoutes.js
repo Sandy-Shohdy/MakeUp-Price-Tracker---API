@@ -5,8 +5,21 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
+    const existingProduct = await Product.findOne({
+      name: req.body.name,
+      brand: req.body.brand,
+      store: req.body.store,
+    });
+
+    if (existingProduct) {
+      return res.status(409).json({
+        error: "Product already exists in the store",
+      });
+    }
+
     const product = new Product(req.body);
     await product.save();
+
     res.status(201).json(product);
   } catch (error) {
     res.status(500).json({ error: "Failed to add product" });
