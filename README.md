@@ -1,6 +1,6 @@
-# Makeup Price Tracker API
+# Makeup Prices  API
 
-A RESTful API for tracking makeup product prices, built with Node.js, Express, and MongoDB.
+A RESTful API for makeup product prices, built with Node.js, Express, and MongoDB.
 
 ## Features
 
@@ -70,5 +70,5 @@ MIT
 
 ---
 
-**Makeup Price Tracker API**  
+**Makeup Prices  API**  
 Created
