@@ -41,9 +41,11 @@ router.get("/:id", async (req, res) => {
     const product = await Product.findById(id);
     res.status(200).json(product);
   } catch (error) {
-    res.status(523).json({ error: "Failed to fetch products" });
+    res.status(523).json({ error: "Failed to find the product" });
   }
 });
+
+
 
 router.delete("/:id", async (req, res) => {
   try {
