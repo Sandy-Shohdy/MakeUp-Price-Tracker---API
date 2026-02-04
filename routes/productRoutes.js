@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
     });
 
     if (existingProduct) {
-      return res.status(409).json({
+      res.status(409).json({
         error: "Product already exists in the store",
       });
     }
@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
     const products = await Product.find();
     res.status(200).json(products);
   } catch (error) {
-    res.status(510).json({ error: "Failed to fetch products" });
+    res.status(500).json({ error: "Failed to fetch products" });
   }
 });
 
@@ -39,21 +39,24 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
+    if (!product) {
+      res.status(404).json({ error: "Product not found" });
+    }
     res.status(200).json(product);
   } catch (error) {
-    res.status(523).json({ error: "Failed to find the product" });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch product due to " + error.message });
   }
 });
-
-
 
 router.delete("/:id", async (req, res) => {
   try {
     const result = await Product.findByIdAndDelete(req.params.id);
     if (result) {
-      res.status(200).json({ message: "Product deleted successfully" });
+      res.status(204).end();
     } else {
-      res.status(404).json({ error: "Product not found" });
+      res.status(404).json({ error: "Product is not found" });
     }
   } catch (error) {
     res.status(500).json({ error: "Failed to delete product" });
